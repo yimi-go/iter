@@ -17,7 +17,6 @@ iter
 # 终结器
 * [x] All
 * [x] Any
-* [ ] Collect
 * [ ] Count
 * [ ] Each
 * [ ] Last
@@ -25,3 +24,5 @@ iter
 * [ ] Min
 * [ ] Reduce
 * [ ] Sum
+# 收集器
+* [x] ToSlice
