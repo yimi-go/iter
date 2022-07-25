@@ -26,17 +26,6 @@ func Any[E any](it Iterator[E], predicate func(v E) bool) bool {
 	return false
 }
 
-func Count[E any](it Iterator[E]) uint64 {
-	count := uint64(0)
-	for {
-		_, ok := it.Next()
-		if !ok {
-			return count
-		}
-		count++
-	}
-}
-
 func Each[E any](it Iterator[E], fn func(v E)) {
 	for {
 		v, ok := it.Next()
@@ -67,4 +56,11 @@ func Last[E any](it Iterator[E]) (v E, ok bool) {
 	return Reduce(it, v, func(accum, v E) E {
 		return v
 	})
+}
+
+func Count[E any](it Iterator[E]) uint64 {
+	r, _ := Reduce(it, uint64(0), func(accum uint64, v E) uint64 {
+		return accum + 1
+	})
+	return r
 }

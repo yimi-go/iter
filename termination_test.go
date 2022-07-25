@@ -24,10 +24,6 @@ func TestAny(t *testing.T) {
 	}))
 }
 
-func TestCount(t *testing.T) {
-	assert.Equal(t, uint64(9), Count(CountUntil(0, 1, 9)))
-}
-
 func TestEach(t *testing.T) {
 	it := CountUntil(0, 1, 9)
 	ch := make(chan int, 10)
@@ -63,4 +59,8 @@ func TestLast(t *testing.T) {
 	assert.Equal(t, 8, v)
 	_, ok = Last(it) // Last on an iterated iterator
 	assert.False(t, ok)
+}
+
+func TestCount(t *testing.T) {
+	assert.Equal(t, uint64(9), Count(CountUntil(0, 1, 9)))
 }
