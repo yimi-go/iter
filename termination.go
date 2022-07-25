@@ -47,17 +47,6 @@ func Each[E any](it Iterator[E], fn func(v E)) {
 	}
 }
 
-func Last[E any](it Iterator[E]) (v E, ok bool) {
-	for {
-		next, nextOk := it.Next()
-		if !nextOk {
-			break
-		}
-		v, ok = next, true
-	}
-	return
-}
-
 func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, v E) R) (r R, ok bool) {
 	r = init
 	for {
@@ -74,4 +63,8 @@ func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, v E) R) (r R,
 	return
 }
 
-// TODO rewrite Last by Reduce
+func Last[E any](it Iterator[E]) (v E, ok bool) {
+	return Reduce(it, v, func(accum, v E) E {
+		return v
+	})
+}

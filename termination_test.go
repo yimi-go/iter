@@ -44,15 +44,6 @@ func TestEach(t *testing.T) {
 	assert.False(t, ok)
 }
 
-func TestLast(t *testing.T) {
-	it := CountUntil(0, 1, 9)
-	v, ok := Last(it)
-	assert.True(t, ok)
-	assert.Equal(t, 8, v)
-	_, ok = Last(it) // Last on an iterated iterator
-	assert.False(t, ok)
-}
-
 func TestReduce(t *testing.T) {
 	it := CountUntil(0, 1, 10)
 	sumFn := func(accum, v int) int {
@@ -62,5 +53,14 @@ func TestReduce(t *testing.T) {
 	assert.True(t, ok)
 	assert.Equal(t, 45, sum)
 	_, ok = Reduce(it, 0, sumFn) // Reduce on an iterated iterator
+	assert.False(t, ok)
+}
+
+func TestLast(t *testing.T) {
+	it := CountUntil(0, 1, 9)
+	v, ok := Last(it)
+	assert.True(t, ok)
+	assert.Equal(t, 8, v)
+	_, ok = Last(it) // Last on an iterated iterator
 	assert.False(t, ok)
 }
