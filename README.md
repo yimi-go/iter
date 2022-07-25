@@ -5,13 +5,13 @@ iter
 # 生成器
 * [x] Counter
 * [x] Slice
-* [ ] FromFunc
+* [x] FromFunc
 # 适配器
 * [x] Chain
 * [x] Filter
 * [x] FlatMap
 * [x] Inspect
-* [ ] Map
+* [x] Map
 * [ ] Distinct
 * [ ] DistinctBy
 # 终结器
