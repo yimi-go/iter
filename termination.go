@@ -46,3 +46,14 @@ func Each[E any](it Iterator[E], fn func(v E)) {
 		fn(v)
 	}
 }
+
+func Last[E any](it Iterator[E]) (v E, ok bool) {
+	for {
+		next, nextOk := it.Next()
+		if !nextOk {
+			break
+		}
+		v, ok = next, true
+	}
+	return
+}

@@ -43,3 +43,12 @@ func TestEach(t *testing.T) {
 	_, ok := <-ch
 	assert.False(t, ok)
 }
+
+func TestLast(t *testing.T) {
+	it := CountUntil(0, 1, 9)
+	v, ok := Last(it)
+	assert.True(t, ok)
+	assert.Equal(t, 8, v)
+	_, ok = Last(it) // Last on an iterated iterator
+	assert.False(t, ok)
+}
