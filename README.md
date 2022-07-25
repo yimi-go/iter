@@ -12,8 +12,8 @@ iter
 * [x] FlatMap
 * [x] Inspect
 * [x] Map
-* [ ] Distinct
-* [ ] DistinctBy
+* [x] Distinct
+* [x] DistinctBy
 # 终结器
 * [ ] All
 * [ ] Any
