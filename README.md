@@ -17,7 +17,7 @@ iter
 # 终结器
 * [x] All
 * [x] Any
-* [ ] Count
+* [x] Count
 * [ ] Each
 * [ ] Last
 * [ ] Max

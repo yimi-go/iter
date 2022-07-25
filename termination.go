@@ -25,3 +25,14 @@ func Any[E any](it Iterator[E], predicate func(v E) bool) bool {
 	}
 	return false
 }
+
+func Count[E any](it Iterator[E]) uint64 {
+	count := uint64(0)
+	for {
+		_, ok := it.Next()
+		if !ok {
+			return count
+		}
+		count++
+	}
+}

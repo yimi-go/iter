@@ -23,3 +23,7 @@ func TestAny(t *testing.T) {
 		return v < 0
 	}))
 }
+
+func TestCount(t *testing.T) {
+	assert.Equal(t, uint64(9), Count(CountUntil(0, 1, 9)))
+}
