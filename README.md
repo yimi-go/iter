@@ -21,7 +21,7 @@ iter
 * [x] Each
 * [x] Last
 * [x] Max, MaxBy
-* [ ] Min, MinBy
+* [x] Min, MinBy
 * [ ] Mean
 * [x] Reduce
 * [ ] Sum

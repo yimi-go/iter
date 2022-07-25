@@ -73,3 +73,12 @@ func TestMax(t *testing.T) {
 	_, ok = Max(it) // Max on an iterated iterator
 	assert.False(t, ok)
 }
+
+func TestMin(t *testing.T) {
+	it := Chain(CountUntil(5, 1, 9), CountTo(4, -1, 0))
+	v, ok := Min(it)
+	assert.True(t, ok)
+	assert.Equal(t, 0, v)
+	_, ok = Min(it) // Min on an iterated iterator
+	assert.False(t, ok)
+}

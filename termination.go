@@ -93,3 +93,26 @@ func Max[E Sortable](it Iterator[E]) (v E, ok bool) {
 		return v
 	})
 }
+
+func MinBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found bool) {
+	var p *E
+	p, found = Reduce(it, p, func(accum *E, v E) *E {
+		if accum == nil {
+			return &v
+		}
+		if valueFn(*accum) > valueFn(v) {
+			return &v
+		}
+		return accum
+	})
+	if found {
+		v = *p
+	}
+	return
+}
+
+func Min[E Sortable](it Iterator[E]) (v E, ok bool) {
+	return MinBy(it, func(v E) E {
+		return v
+	})
+}
