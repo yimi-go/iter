@@ -24,6 +24,6 @@ iter
 * [x] Min, MinBy
 * [x] Mean
 * [x] Reduce
-* [ ] Sum
+* [x] Sum
 # 收集器
 * [x] ToSlice

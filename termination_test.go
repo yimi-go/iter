@@ -91,3 +91,12 @@ func TestMean(t *testing.T) {
 	_, ok = Mean(it) // Mean on an iterated iterator
 	assert.False(t, ok)
 }
+
+func TestSum(t *testing.T) {
+	it := CountUntil(0, 1, 9)
+	sum, ok := Sum(it)
+	assert.True(t, ok)
+	assert.Equal(t, 36, sum)
+	_, ok = Sum(it) // Sum on an iterated iterator
+	assert.False(t, ok)
+}

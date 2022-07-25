@@ -135,3 +135,7 @@ func Mean[E Arithmetical](it Iterator[E]) (v E, ok bool) {
 	v = sum / E(count)
 	return
 }
+
+func Sum[E Arithmetical](it Iterator[E]) (v E, ok bool) {
+	return Reduce(it, v, func(accum, e E) E { return accum + e })
+}
