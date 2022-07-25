@@ -6,12 +6,10 @@ iter
 * [x] Counter
 * [x] Slice
 * [ ] FromFunc
-* [ ] Repeat
 # 适配器
 * [x] Chain
 * [x] Filter
 * [ ] FlatMap
-* [ ] Flatten
 * [ ] Inspect
 * [ ] Map
 * [ ] Distinct
