@@ -16,7 +16,7 @@ iter
 * [x] DistinctBy
 # 终结器
 * [x] All
-* [ ] Any
+* [x] Any
 * [ ] Collect
 * [ ] Count
 * [ ] Each

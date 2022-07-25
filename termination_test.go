@@ -14,3 +14,12 @@ func TestAll(t *testing.T) {
 		return v%2 == 0
 	}))
 }
+
+func TestAny(t *testing.T) {
+	assert.True(t, Any(CountUntil(0, 1, 9), func(v int) bool {
+		return v%2 == 0
+	}))
+	assert.False(t, Any(CountUntil(0, 1, 9), func(v int) bool {
+		return v < 0
+	}))
+}
