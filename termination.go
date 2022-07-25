@@ -36,7 +36,7 @@ func Each[E any](it Iterator[E], fn func(v E)) {
 	}
 }
 
-func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, v E) R) (r R, ok bool) {
+func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, e E) R) (r R, ok bool) {
 	r = init
 	for {
 		next, nextOk := it.Next()
@@ -53,13 +53,13 @@ func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, v E) R) (r R,
 }
 
 func Last[E any](it Iterator[E]) (v E, ok bool) {
-	return Reduce(it, v, func(accum, v E) E {
-		return v
+	return Reduce(it, v, func(accum, e E) E {
+		return e
 	})
 }
 
 func Count[E any](it Iterator[E]) uint64 {
-	r, _ := Reduce(it, uint64(0), func(accum uint64, v E) uint64 {
+	r, _ := Reduce(it, uint64(0), func(accum uint64, e E) uint64 {
 		return accum + 1
 	})
 	return r
@@ -71,14 +71,14 @@ type Sortable interface {
 		~float64 | ~float32 | ~string
 }
 
-func MaxBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found bool) {
+func MaxBy[E any, S Sortable](it Iterator[E], valueFn func(e E) S) (v E, found bool) {
 	var p *E
-	p, found = Reduce(it, p, func(accum *E, v E) *E {
+	p, found = Reduce(it, p, func(accum *E, e E) *E {
 		if accum == nil {
-			return &v
+			return &e
 		}
-		if valueFn(*accum) < valueFn(v) {
-			return &v
+		if valueFn(*accum) < valueFn(e) {
+			return &e
 		}
 		return accum
 	})
@@ -89,19 +89,19 @@ func MaxBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found b
 }
 
 func Max[E Sortable](it Iterator[E]) (v E, ok bool) {
-	return MaxBy(it, func(v E) E {
-		return v
+	return MaxBy(it, func(e E) E {
+		return e
 	})
 }
 
-func MinBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found bool) {
+func MinBy[E any, S Sortable](it Iterator[E], valueFn func(e E) S) (v E, found bool) {
 	var p *E
-	p, found = Reduce(it, p, func(accum *E, v E) *E {
+	p, found = Reduce(it, p, func(accum *E, e E) *E {
 		if accum == nil {
-			return &v
+			return &e
 		}
-		if valueFn(*accum) > valueFn(v) {
-			return &v
+		if valueFn(*accum) > valueFn(e) {
+			return &e
 		}
 		return accum
 	})
@@ -112,7 +112,26 @@ func MinBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found b
 }
 
 func Min[E Sortable](it Iterator[E]) (v E, ok bool) {
-	return MinBy(it, func(v E) E {
-		return v
+	return MinBy(it, func(e E) E {
+		return e
 	})
+}
+
+type Arithmetical interface {
+	~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uint |
+		~int8 | ~int16 | ~int32 | ~int64 | ~int |
+		~float64 | ~float32
+}
+
+func Mean[E Arithmetical](it Iterator[E]) (v E, ok bool) {
+	count := uint64(0)
+	sum, ok := Reduce(it, v, func(accum, e E) E {
+		count++
+		return accum + e
+	})
+	if !ok {
+		return
+	}
+	v = sum / E(count)
+	return
 }

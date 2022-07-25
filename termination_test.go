@@ -82,3 +82,12 @@ func TestMin(t *testing.T) {
 	_, ok = Min(it) // Min on an iterated iterator
 	assert.False(t, ok)
 }
+
+func TestMean(t *testing.T) {
+	it := CountUntil(0, 1, 9)
+	mean, ok := Mean(it)
+	assert.True(t, ok)
+	assert.Equal(t, 4, mean)
+	_, ok = Mean(it) // Mean on an iterated iterator
+	assert.False(t, ok)
+}

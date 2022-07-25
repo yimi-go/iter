@@ -22,7 +22,7 @@ iter
 * [x] Last
 * [x] Max, MaxBy
 * [x] Min, MinBy
-* [ ] Mean
+* [x] Mean
 * [x] Reduce
 * [ ] Sum
 # 收集器
