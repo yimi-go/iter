@@ -18,7 +18,7 @@ iter
 * [x] All
 * [x] Any
 * [x] Count
-* [ ] Each
+* [x] Each
 * [ ] Last
 * [ ] Max
 * [ ] Min

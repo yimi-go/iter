@@ -36,3 +36,13 @@ func Count[E any](it Iterator[E]) uint64 {
 		count++
 	}
 }
+
+func Each[E any](it Iterator[E], fn func(v E)) {
+	for {
+		v, ok := it.Next()
+		if !ok {
+			break
+		}
+		fn(v)
+	}
+}
