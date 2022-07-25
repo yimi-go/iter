@@ -20,8 +20,8 @@ iter
 * [x] Count
 * [x] Each
 * [x] Last
-* [ ] Max
-* [ ] Min
+* [x] Max, MaxBy
+* [ ] Min, MinBy
 * [ ] Mean
 * [x] Reduce
 * [ ] Sum

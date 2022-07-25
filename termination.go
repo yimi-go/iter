@@ -64,3 +64,32 @@ func Count[E any](it Iterator[E]) uint64 {
 	})
 	return r
 }
+
+type Sortable interface {
+	~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uint |
+		~int8 | ~int16 | ~int32 | ~int64 | ~int |
+		~float64 | ~float32 | ~string
+}
+
+func MaxBy[E any, S Sortable](it Iterator[E], valueFn func(v E) S) (v E, found bool) {
+	var p *E
+	p, found = Reduce(it, p, func(accum *E, v E) *E {
+		if accum == nil {
+			return &v
+		}
+		if valueFn(*accum) < valueFn(v) {
+			return &v
+		}
+		return accum
+	})
+	if found {
+		v = *p
+	}
+	return
+}
+
+func Max[E Sortable](it Iterator[E]) (v E, ok bool) {
+	return MaxBy(it, func(v E) E {
+		return v
+	})
+}

@@ -64,3 +64,12 @@ func TestLast(t *testing.T) {
 func TestCount(t *testing.T) {
 	assert.Equal(t, uint64(9), Count(CountUntil(0, 1, 9)))
 }
+
+func TestMax(t *testing.T) {
+	it := Chain(CountUntil(5, 1, 9), CountTo(4, -1, 0))
+	v, ok := Max(it)
+	assert.True(t, ok)
+	assert.Equal(t, 8, v)
+	_, ok = Max(it) // Max on an iterated iterator
+	assert.False(t, ok)
+}
