@@ -52,3 +52,15 @@ func TestLast(t *testing.T) {
 	_, ok = Last(it) // Last on an iterated iterator
 	assert.False(t, ok)
 }
+
+func TestReduce(t *testing.T) {
+	it := CountUntil(0, 1, 10)
+	sumFn := func(accum, v int) int {
+		return accum + v
+	}
+	sum, ok := Reduce(it, 0, sumFn)
+	assert.True(t, ok)
+	assert.Equal(t, 45, sum)
+	_, ok = Reduce(it, 0, sumFn) // Reduce on an iterated iterator
+	assert.False(t, ok)
+}

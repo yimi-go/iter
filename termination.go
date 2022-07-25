@@ -57,3 +57,21 @@ func Last[E any](it Iterator[E]) (v E, ok bool) {
 	}
 	return
 }
+
+func Reduce[E any, R any](it Iterator[E], init R, fn func(accum R, v E) R) (r R, ok bool) {
+	r = init
+	for {
+		next, nextOk := it.Next()
+		if !nextOk {
+			break
+		}
+		r = fn(r, next)
+		ok = true
+	}
+	if !ok {
+		r = init
+	}
+	return
+}
+
+// TODO rewrite Last by Reduce

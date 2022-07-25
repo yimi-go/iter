@@ -22,7 +22,7 @@ iter
 * [x] Last
 * [ ] Max
 * [ ] Min
-* [ ] Reduce
+* [x] Reduce
 * [ ] Sum
 # 收集器
 * [x] ToSlice
