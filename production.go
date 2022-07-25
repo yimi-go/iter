@@ -64,3 +64,34 @@ func CountUntil[E Countable](from, step, notTo E) Iterator[E] {
 	}
 	return res
 }
+
+type fromFunc[E any] func() (E, bool)
+
+func (f fromFunc[E]) Next() (E, bool) {
+	return f()
+}
+
+func FromFunc[E any](fn func() (E, bool)) Iterator[E] {
+	return fromFunc[E](fn)
+}
+
+type slice[E any] struct {
+	cur   int
+	slice []E
+}
+
+func (s *slice[E]) Next() (v E, ok bool) {
+	if s.cur >= len(s.slice) {
+		return
+	}
+	v, ok = s.slice[s.cur], true
+	s.cur++
+	return
+}
+
+func Slice[E any](s []E) Iterator[E] {
+	return &slice[E]{
+		cur:   0,
+		slice: s,
+	}
+}
