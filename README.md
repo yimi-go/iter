@@ -9,8 +9,8 @@ iter
 # 适配器
 * [x] Chain
 * [x] Filter
-* [ ] FlatMap
-* [ ] Inspect
+* [x] FlatMap
+* [x] Inspect
 * [ ] Map
 * [ ] Distinct
 * [ ] DistinctBy
