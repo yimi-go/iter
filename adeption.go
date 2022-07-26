@@ -1,5 +1,6 @@
 package iter
 
+// TODO refactor chain: wrapping slice of Iterators.
 type chain[E any] struct {
 	a, b Iterator[E]
 }
@@ -12,6 +13,8 @@ func (c *chain[E]) Next() (E, bool) {
 	return c.b.Next()
 }
 
+// Chain connects iterators into one Iterator that iterates the chained iterators
+// one by one.
 func Chain[E any](a, b Iterator[E]) Iterator[E] {
 	return &chain[E]{a, b}
 }
@@ -37,6 +40,8 @@ func (d *distinct[E, C]) Next() (v E, ok bool) {
 	}
 }
 
+// DistinctBy warps an Iterator and returns a new Iterator that only returns
+// the first one of duplicated elements of key which calculated by the key func.
 func DistinctBy[E any, C comparable](it Iterator[E], fn func(v E) C) Iterator[E] {
 	return &distinct[E, C]{
 		iter:  it,
@@ -45,6 +50,8 @@ func DistinctBy[E any, C comparable](it Iterator[E], fn func(v E) C) Iterator[E]
 	}
 }
 
+// Distinct wraps an Iterator of comparable elements and returns a new Iterator
+// that only returns the first one of duplicated elements.
 func Distinct[E comparable](it Iterator[E]) Iterator[E] {
 	return DistinctBy(it, func(v E) E {
 		return v
@@ -68,6 +75,8 @@ func (f *filter[E]) Next() (v E, ok bool) {
 	}
 }
 
+// Filter wraps an Iterator and returns a new Iterator that only returns
+// elements that match the given predicate.
 func Filter[E any](it Iterator[E], predicate func(v E) bool) Iterator[E] {
 	return &filter[E]{
 		iter:      it,
@@ -96,6 +105,8 @@ func (f *flatMap[T, R]) Next() (v R, ok bool) {
 	}
 }
 
+// FlatMap wraps an Iterator and returns a new Iterator that returns the elements
+// of the Iterators that produced by the mapping func one by one.
 func FlatMap[T any, R any](it Iterator[T], mapFn func(t T) Iterator[R]) Iterator[R] {
 	return &flatMap[T, R]{
 		iter:  it,
@@ -116,6 +127,8 @@ func (i *inspect[E]) Next() (v E, ok bool) {
 	return
 }
 
+// Inspect wraps an Iterator and returns a new Iterator that performs the provided
+// action on each element iterated before return it.
 func Inspect[E any](it Iterator[E], fn func(v E)) Iterator[E] {
 	return &inspect[E]{
 		iter: it,
@@ -137,6 +150,8 @@ func (m *mapping[T, R]) Next() (v R, ok bool) {
 	return
 }
 
+// Map wraps an Iterator and returns a new Iterator that transform each element
+// to new value by provided mapping func, and returns the transformed element.
 func Map[T any, R any](it Iterator[T], fn func(t T) R) Iterator[R] {
 	return &mapping[T, R]{
 		iter:  it,

@@ -2,6 +2,7 @@ package iter
 
 import "fmt"
 
+// Countable are types that can be operated by '+' and their values are discrete.
 type Countable interface {
 	~int64 | ~int16 | ~int8 | ~int |
 		~uint64 | ~uint32 | ~uint16 | ~uint8 | uint |
@@ -23,6 +24,8 @@ func (s *counter[E]) Next() (v E, ok bool) {
 	return
 }
 
+// CountTo creates an Iterator that generates values in range of specified
+// start, step and end (included).
 func CountTo[E Countable](from, step, to E) Iterator[E] {
 	var zero E
 	if step == zero {
@@ -44,6 +47,8 @@ func CountTo[E Countable](from, step, to E) Iterator[E] {
 	return res
 }
 
+// CountUntil creates an Iterator that generates values in range of specified
+// start, step and end (excluded).
 func CountUntil[E Countable](from, step, notTo E) Iterator[E] {
 	var zero E
 	if step == zero {
@@ -71,6 +76,7 @@ func (f fromFunc[E]) Next() (E, bool) {
 	return f()
 }
 
+// FromFunc creates an Iterator that produces value from specified closure.
 func FromFunc[E any](fn func() (E, bool)) Iterator[E] {
 	return fromFunc[E](fn)
 }
@@ -89,6 +95,7 @@ func (s *slice[E]) Next() (v E, ok bool) {
 	return
 }
 
+// Slice creates an Iterator of the slice.
 func Slice[E any](s []E) Iterator[E] {
 	return &slice[E]{
 		cur:   0,
