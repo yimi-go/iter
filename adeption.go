@@ -1,22 +1,26 @@
 package iter
 
-// TODO refactor chain: wrapping slice of Iterators.
 type chain[E any] struct {
-	a, b Iterator[E]
+	iters []Iterator[E]
 }
 
-func (c *chain[E]) Next() (E, bool) {
-	v, ok := c.a.Next()
-	if ok {
-		return v, true
+func (c *chain[E]) Next() (v E, ok bool) {
+	for {
+		if len(c.iters) == 0 {
+			return
+		}
+		iter := c.iters[0]
+		if v, ok = iter.Next(); ok {
+			return
+		}
+		c.iters = c.iters[1:]
 	}
-	return c.b.Next()
 }
 
 // Chain connects iterators into one Iterator that iterates the chained iterators
 // one by one.
-func Chain[E any](a, b Iterator[E]) Iterator[E] {
-	return &chain[E]{a, b}
+func Chain[E any](iters ...Iterator[E]) Iterator[E] {
+	return &chain[E]{iters: iters}
 }
 
 type distinct[E any, C comparable] struct {
